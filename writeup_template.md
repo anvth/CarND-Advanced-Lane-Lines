@@ -142,11 +142,21 @@ In order to identify the lane-line pixels, I plotted a histogram of the pixel in
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The code for calculating radius and curvature and the position of the vehicle with respect to center can be found in the compute_lane_curvature method of the AdvancedLaneDetectorWithMemory class present in the python notebook.
+
+This method takes Left lane line and Right lane line (which represents respectively the LaneLine instances for
+the computed left and right lanes, for the given binary warped image) and returns left curvature, right curvature and offset from center, which are all measured in meters.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step can also be found in the AdvancedLaneDetectorWithMemory class of the Python notebook. It consists of following sub-steps:
+
+| Method Name        | Description   | 
+|:-------------:|:-------------:| 
+| draw_lane_lines      | Returns an image where the computed lane lines have been drawn on top of the original warped binary image        |
+|draw_lane_area    |Returns an image where the inside of the lane has been colored in bright green |
+|draw_lane_lines_regions |Returns an image where the computed left and right lane areas have been drawn on top of the original warped binary image |
+|combine_images |Returns a new image made up of the lane area image, and the remaining lane images are overlaid as small images in a row at the top of the the new image|
 
 ![alt text][image6]
 
@@ -156,7 +166,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./output_videos/lanes_project_video_sample.mp4)
+Here's a [link to my video result](./output_videos/project_video.mp4)
 
 ---
 
@@ -164,4 +174,8 @@ Here's a [link to my video result](./output_videos/lanes_project_video_sample.mp
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+A few things I would like improve upon, includes:
+- Check out more color spaces that would pick up lane lines even under dark shadow. The current implementation fails to detect lanes in the shadow region.
+- produce an exponential moving average of the line coefficients of previous frames and use it when pixel detection fails
+- Apply other relevant computer vision techniques not covered by this project
+
